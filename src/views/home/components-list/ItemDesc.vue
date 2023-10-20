@@ -13,8 +13,10 @@
     </el-form-item>
 
     <el-form-item label="完整路径">
-      <div style="word-break:break-all;">{{ itemData.full_path }}</div>
-      <el-button plain style="margin-left: 10px;" size="mini" type="info" @click="handleCopy(itemData.full_path)">复制路径</el-button>
+      <div style="word-break:break-all;">
+        {{ itemData.full_path }}
+        <el-button plain style="margin-left: 10px;" size="mini" type="info" @click="handleCopy(itemData.full_path)">复制路径</el-button>
+      </div>
     </el-form-item>
   </el-form>
 </template>

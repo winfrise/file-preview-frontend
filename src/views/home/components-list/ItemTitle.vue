@@ -1,5 +1,6 @@
 <template>
   <div class="item-title">
+    <div class="item-index">{{itemData.id}}.</div>
     <div class="file-name">{{itemData.file_name}}</div>
     <div class="file-suffix">{{itemData.file_suffix || '目录'}}</div>
     <div class="row-controls">
@@ -15,7 +16,10 @@
 
 <script setup>
 import useClipboard from 'vue-clipboard3'
+import { useRoute, useRouter } from 'vue-router'
+
 const { toClipboard } = useClipboard()
+const router = useRouter()
 
 const props = defineProps({
   itemData: {
@@ -64,7 +68,13 @@ const handleOpenDir = (path) => {
 
 <style lang="scss" scoped>
 .item-title {
+  position: relative;
   display: flex;
+  .item-index {
+    position: absolute;
+    left: -6px;
+    transform: translateX(-100%);
+  }
   .file-name {
     flex: 1;
     font-weight: bold;

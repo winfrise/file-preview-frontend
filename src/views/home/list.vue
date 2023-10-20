@@ -1,12 +1,12 @@
 <template>
   <div class="page-container">
     <div class="page-action-box">
-      <el-button type="primary"  :icon="ArrowLeft" :disabled="breadList.length <= 1" @click="handleOpenDir(getBreadFullPath(breadList.length - 2))">返回上一级</el-button>
+      <el-button type="primary"  :icon="ArrowLeft" :disabled="breadList.length <= 1" @click="handleChangeCurrentPath(getBreadFullPath(breadList.length - 2))">返回上一级</el-button>
 
       <div class="location-box">
         当前位置：
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item v-for="(item, index) in breadList" :key="index" @click.enter="handleOpenDir(getBreadFullPath(index))">
+          <el-breadcrumb-item v-for="(item, index) in breadList" :key="index" @click.enter="handleChangeCurrentPath(getBreadFullPath(index))">
             <span class="pointer">{{item}}</span>
           </el-breadcrumb-item>
         </el-breadcrumb>
@@ -17,7 +17,7 @@
      <VirtualList class="virtual-list"
           :data-key="'id'"
           :data-sources="tableData"
-          :estimate-size="20"
+          :estimate-size="10"
           :item-class="''"
           ref="virtualList"
         >
@@ -138,10 +138,17 @@ const handleChangeCurrentPath = (path) => {
   }
 }
 .page-container {
-  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
 }
 .page-action-box {
+  position: sticky;
+  z-index: 1;
+  top: 0;
   display: flex;
+  padding: 10px 20px;
+  background: #fff;
 }
 .location-box {
   margin-left: 20px;
@@ -153,6 +160,8 @@ const handleChangeCurrentPath = (path) => {
 }
 
 .virtual-list {
+  height: calc(100% - 32px);
+  padding: 0 20px;
   .item-inner {
     height: auto;
     padding: 10px 10px;
