@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <div class="page-action-box">
+    <!-- <div class="page-action-box">
       <el-button type="primary"  :icon="ArrowLeft" :disabled="breadList.length <= 1" @click="handleChangeCurrentPath(getBreadFullPath(breadList.length - 2))">返回上一级</el-button>
 
       <div class="location-box">
@@ -11,19 +11,19 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-
-    </div>
+    </div> -->
 
       <RecycleScroller
         class="virtual-scroller"
         :items="tableData"
-        :item-size="320"
+        :item-size="100"
+        :buffer="100"
         key-field="id"
         v-slot="{ item }"
       >
         <div class="item-inner">
             <ItemTitle :itemData="item" @changeCurrentPath="handleChangeCurrentPath" />
-            <ItemDesc :itemData="item" />
+            <!-- <ItemDesc :itemData="item" /> -->
         </div>
       </RecycleScroller>
 
@@ -181,7 +181,7 @@ const handleChangeCurrentPath = (path) => {
 
 
 .item-inner {
-  padding: 10px 10px;
+  padding: 10px 40px;
   border-top: 1px solid #ccc;
   &:last-child {
     border-bottom: 1px solid #ccc;
