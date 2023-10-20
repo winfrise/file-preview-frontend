@@ -13,14 +13,16 @@
       </div>
     </div>
 
+    <div style="height: 500px;">
       <RecycleScroller
         class="virtual-scroller"
         :items="tableData"
-        :item-size="100"
+        :item-size="40"
         :buffer="100"
         key-field="id"
+        size-field="height"
       >
-        <template #before>
+        <!-- <template #before>
           <div class="notice">
             The message heights are unknown.
           </div>
@@ -29,7 +31,7 @@
           <div class="notice">
             You have reached the end.
           </div>
-        </template>
+        </template> -->
         <template #default="props">
                 <div class="item-inner">
                     <ItemTitle :itemData="props.item" @changeCurrentPath="handleChangeCurrentPath" />
@@ -37,6 +39,7 @@
                 </div>
         </template>
       </RecycleScroller>
+    </div>
 
      <!-- <VirtualList
           :data-key="'id'"
@@ -133,7 +136,7 @@ const fetchFileList = async (path) => {
   if (err) return
   const fileList = (res.data?.file || []).map(item => ({...item, type: 'file'}))
   const dirList = (res.data?.dir || []).map(item => ({...item, type: 'dir'}))
-  tableData.value = ([...dirList, ...fileList]).map((item, index) => ({...item, id: (index + 1)}))
+  tableData.value = ([...dirList, ...fileList]).map((item, index) => ({...item, id: (index + 1), height: 40}))
 
   console.log(tableData.value)
 }
@@ -188,7 +191,8 @@ const handleChangeCurrentPath = (path) => {
 
 .virtual-scroller {
   width: 100%;
-  height: calc(100% - 40px);
+  // height: calc(100% - 40px);
+  height: 500px;
   overflow-y: auto;
 }
 
