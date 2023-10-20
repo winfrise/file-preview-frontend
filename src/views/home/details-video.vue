@@ -1,6 +1,6 @@
 <template>
   <div class="video-details">
-    <VideoPlayer :src="filePath"></VideoPlayer>
+    <video :src="filePath" class="video" controls></video>
   </div>
 </template>
 
@@ -16,6 +16,12 @@
 .video-details {
   width: 100vw;
   height: 100vh;
+  background: rgba(0, 0, 0, 1);
+}
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 </style>
