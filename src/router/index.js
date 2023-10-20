@@ -19,6 +19,14 @@ const routes = [
         meta: {
           title: '视频播放器'
         }
+      },
+      {
+        name: 'PictureDetails',
+        path: 'picture-details',
+        component: () => import('@/views/home/details-picture.vue'),
+        meta: {
+          title: '图片详情'
+        }
       }
     ]
   },

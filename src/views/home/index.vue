@@ -70,15 +70,18 @@ const route = useRoute()
 const router = useRouter()
 const { toClipboard } = useClipboard()
 
+// 当前文件夹路径
 const currentPath = ref()
 currentPath.value = route.query.path
 
+// 面包屑列表
 const breadList = computed(() => {
   return (currentPath.value || '').split('/').filter(item => !['.', '/'].includes(item))
 })
 
 const tableData = ref([])
 
+// 请求获取数据
 const fetchFileList = async (path) => {
   const [err, res] = await getFileList({path: path || currentPath.value })
   if (err) return
@@ -88,10 +91,12 @@ const fetchFileList = async (path) => {
 }
 fetchFileList()
 
+// 获取面包屑完整链接
 const getBreadFullPath = (breadIndex) => {
   return './' + breadList.value.slice(0, breadIndex + 1).join('/')
 }
 
+// 复制
 const handleCopy = (text) => {
   toClipboard(text)
     .then(() => {
@@ -99,10 +104,19 @@ const handleCopy = (text) => {
     })
 }
 
+// 跳转到文件详情页
 const handleJumpDetails = (row) => {
-  if (['mp4', 'mov', 'avi'].includes(row.file_suffix)) {
+  const fileSuffix = row.file_suffix
+  if (['mp4', 'mov', 'avi'].includes(fileSuffix)) {
     router.push({
       name: 'VideoDetails',
+      query: {
+        file_path: row.full_path
+      }
+    })
+  } else if (['jpg', 'gif', 'jpg', 'jpeg'].includes(fileSuffix)) {
+    router.push({
+      name: 'PictureDetails',
       query: {
         file_path: row.full_path
       }
@@ -112,6 +126,7 @@ const handleJumpDetails = (row) => {
   }
 }
 
+// 文件夹切换
 const handleOpenDir = (path) => {
   currentPath.value = path
   fetchFileList(path)
