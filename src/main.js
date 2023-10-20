@@ -9,10 +9,14 @@ import './permission.js'
 import '@/styles/custom-element-ui.scss'
 import '@/styles/global.css'
 
+import VirtualList from 'vue-virtual-list-v3';
+
 import { createPinia } from 'pinia'
 const pinia = createPinia()
 
 let app = createApp(App)
+
+app.use(VirtualList)
 
 // 遍历icon
 for (let key in ElIcons) {
