@@ -13,6 +13,23 @@
       </div>
 
     </div>
+
+     <VirtualList class="virtual-list"
+          :data-key="'id'"
+          :data-sources="tableData"
+          :estimate-size="20"
+          :item-class="''"
+          ref="virtualList"
+        >
+        <template #default="{source}">
+            <div class="item-inner">
+                <ItemTitle :itemData="source" @changeCurrentPath="handleChangeCurrentPath" />
+                <ItemDesc :itemData="source" />
+            </div>
+        </template>
+      </VirtualList>
+
+    <!--
     <el-table :data="tableData" style="width: 100%">
       <el-table-column type="expand" width="20px">
         <template #default="scope">
@@ -56,6 +73,7 @@
         </template>
       </el-table-column>
     </el-table>
+    -->
   </div>
 </template>
 
@@ -65,6 +83,9 @@ import { ArrowLeft } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router'
 import useClipboard from 'vue-clipboard3'
 import { ElMessage } from 'element-plus'
+
+import ItemTitle from './components-list/ItemTitle.vue'
+import ItemDesc from './components-list/ItemDesc.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -87,7 +108,7 @@ const fetchFileList = async (path) => {
   if (err) return
   const fileList = (res.data?.file || []).map(item => ({...item, type: 'file'}))
   const dirList = (res.data?.dir || []).map(item => ({...item, type: 'dir'}))
-  tableData.value = [...dirList, ...fileList]
+  tableData.value = ([...dirList, ...fileList]).map((item, index) => ({...item, id: (index + 1)}))
 }
 fetchFileList()
 
@@ -96,39 +117,9 @@ const getBreadFullPath = (breadIndex) => {
   return './' + breadList.value.slice(0, breadIndex + 1).join('/')
 }
 
-// 复制
-const handleCopy = (text) => {
-  toClipboard(text)
-    .then(() => {
-      ElMessage({type: 'success', message: '复制成功'})
-    })
-}
-
-// 跳转到文件详情页
-const handleJumpDetails = (row) => {
-  const fileSuffix = row.file_suffix
-  if (['mp4', 'mov', 'avi'].includes(fileSuffix)) {
-    router.push({
-      name: 'VideoDetails',
-      query: {
-        file_path: row.full_path
-      }
-    })
-  } else if (['jpg', 'gif', 'jpg', 'jpeg'].includes(fileSuffix)) {
-    router.push({
-      name: 'PictureDetails',
-      query: {
-        file_path: row.full_path
-      }
-    })
-  } else {
-    ElMessage({type: 'error', message: '暂不支持'})
-  }
-}
-
-// 文件夹切换
-const handleOpenDir = (path) => {
+const handleChangeCurrentPath = (path) => {
   currentPath.value = path
+
   fetchFileList(path)
 
   router.replace({
@@ -159,5 +150,16 @@ const handleOpenDir = (path) => {
 }
 .pointer {
   cursor: pointer;
+}
+
+.virtual-list {
+  .item-inner {
+    height: auto;
+    padding: 10px 10px;
+    border-top: 1px solid #ccc;
+    &:last-child {
+      border-bottom: 1px solid #ccc;
+    }
+  }
 }
 </style>
