@@ -1,8 +1,9 @@
 <template>
   <div class="item-title">
     <div class="item-index">{{itemData.id}}.</div>
-    <div class="file-name">{{itemData.file_name}}</div>
-    <div class="file-suffix">{{itemData.file_suffix || '目录'}}</div>
+    <div class="file-name" @click="handleJumpDetails(itemData)">{{itemData.file_name}}</div>
+    <!-- <div class="file-suffix">{{itemData.file_suffix || '目录'}}</div> -->
+    <!--
     <div class="row-controls">
       <div v-if="itemData.type === 'file'">
         <el-button size="mini" type="primary" @click="handleJumpDetails(itemData)">查看详情</el-button>
@@ -11,6 +12,7 @@
         <el-button size="mini" plain type="primary" @click="handleOpenDir(itemData.file_path)">打开目录</el-button>
       </div>
     </div>
+    -->
   </div>
 </template>
 
@@ -78,6 +80,7 @@ const handleOpenDir = (path) => {
   .file-name {
     flex: 1;
     font-weight: bold;
+    word-break:break-all;
   }
   .file-suffix {
     width: 60px;

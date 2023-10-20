@@ -14,20 +14,34 @@
 
     </div>
 
-     <VirtualList class="virtual-list"
+      <RecycleScroller
+        class="virtual-scroller"
+        :items="tableData"
+        :item-size="320"
+        key-field="id"
+        v-slot="{ item }"
+      >
+        <div class="item-inner">
+            <ItemTitle :itemData="item" @changeCurrentPath="handleChangeCurrentPath" />
+            <ItemDesc :itemData="item" />
+        </div>
+      </RecycleScroller>
+
+     <!-- <VirtualList
           :data-key="'id'"
           :data-sources="tableData"
           :estimate-size="10"
           :item-class="''"
           ref="virtualList"
+          containerClass="list-dynamic"
         >
         <template #default="{source}">
-            <div class="item-inner">
+            <div class="item-inner" style="height: 300px;">
                 <ItemTitle :itemData="source" @changeCurrentPath="handleChangeCurrentPath" />
                 <ItemDesc :itemData="source" />
             </div>
         </template>
-      </VirtualList>
+      </VirtualList> -->
 
     <!--
     <el-table :data="tableData" style="width: 100%">
@@ -159,16 +173,19 @@ const handleChangeCurrentPath = (path) => {
   cursor: pointer;
 }
 
-.virtual-list {
-  height: calc(100% - 32px);
-  padding: 0 20px;
-  .item-inner {
-    height: auto;
-    padding: 10px 10px;
-    border-top: 1px solid #ccc;
-    &:last-child {
-      border-bottom: 1px solid #ccc;
-    }
+.virtual-scroller {
+  width: 100%;
+  height: calc(100% - 40px);
+  overflow-y: auto;
+}
+
+
+.item-inner {
+  padding: 10px 10px;
+  border-top: 1px solid #ccc;
+  &:last-child {
+    border-bottom: 1px solid #ccc;
   }
 }
+
 </style>

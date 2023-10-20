@@ -8,6 +8,10 @@
       {{itemData.file_size}}KB
     </el-form-item>
 
+    <el-form-item label="文件格式">
+      {{itemData.file_suffix}}
+    </el-form-item>
+
     <el-form-item label="文件路径">
       <div style="word-break:break-all;">{{ itemData.file_path }}</div>
     </el-form-item>
