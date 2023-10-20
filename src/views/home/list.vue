@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <!-- <div class="page-action-box">
+    <div class="page-action-box">
       <el-button type="primary"  :icon="ArrowLeft" :disabled="breadList.length <= 1" @click="handleChangeCurrentPath(getBreadFullPath(breadList.length - 2))">返回上一级</el-button>
 
       <div class="location-box">
@@ -11,7 +11,7 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-    </div> -->
+    </div>
 
       <RecycleScroller
         class="virtual-scroller"
@@ -19,12 +19,23 @@
         :item-size="100"
         :buffer="100"
         key-field="id"
-        v-slot="{ item }"
       >
-        <div class="item-inner">
-            <ItemTitle :itemData="item" @changeCurrentPath="handleChangeCurrentPath" />
-            <!-- <ItemDesc :itemData="item" /> -->
-        </div>
+        <template #before>
+          <div class="notice">
+            The message heights are unknown.
+          </div>
+        </template>
+        <template #after>
+          <div class="notice">
+            You have reached the end.
+          </div>
+        </template>
+        <template #default="props">
+                <div class="item-inner">
+                    <ItemTitle :itemData="props.item" @changeCurrentPath="handleChangeCurrentPath" />
+                    <!-- <ItemDesc :itemData="item" /> -->
+                </div>
+        </template>
       </RecycleScroller>
 
      <!-- <VirtualList
@@ -123,6 +134,8 @@ const fetchFileList = async (path) => {
   const fileList = (res.data?.file || []).map(item => ({...item, type: 'file'}))
   const dirList = (res.data?.dir || []).map(item => ({...item, type: 'dir'}))
   tableData.value = ([...dirList, ...fileList]).map((item, index) => ({...item, id: (index + 1)}))
+
+  console.log(tableData.value)
 }
 fetchFileList()
 

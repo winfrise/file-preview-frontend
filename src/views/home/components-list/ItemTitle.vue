@@ -34,6 +34,10 @@ const emits = defineEmits(['changeCurrentPath'])
 
 // 跳转到文件详情页
 const handleJumpDetails = (row) => {
+  if (row.type === 'dir') {
+    handleOpenDir(row.file_path)
+    return
+  }
   const fileSuffix = row.file_suffix
   if (['mp4', 'mov', 'avi'].includes(fileSuffix)) {
     router.push({
