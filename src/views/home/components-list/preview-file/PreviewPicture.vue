@@ -1,0 +1,20 @@
+<template>
+  <el-image class="img" :src="src" fit="contain"></el-image>
+</template>
+
+<script setup>
+const props = defineProps({
+  src: {
+    type: Object,
+    default: () => ({})
+  }
+})
+</script>
+
+<style lang="scss" scoped>
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+</style>

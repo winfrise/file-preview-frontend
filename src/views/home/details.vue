@@ -1,15 +1,17 @@
 <template>
-  <div class="video-details">
-    <el-image class="img" :src="filePath" fit="contain"></el-image>
+  <div class="details">
+    <PreviewFile :itemData="itemData" />
   </div>
 </template>
 
 <script setup>
-  import { useRoute, useRouter } from 'vue-router'
+  import PreviewFile from './components-list/preview-file/index.vue'
 
+  import { useRoute, useRouter } from 'vue-router'
   const route = useRoute()
-  const filePath = ref()
-  filePath.value = route.query.file_path
+
+  const itemData = JSON.parse(decodeURIComponent(route.query.item_data))
+
 </script>
 
 <style lang="scss" scoped>

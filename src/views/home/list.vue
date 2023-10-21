@@ -110,7 +110,7 @@ import { ElMessage } from 'element-plus'
 
 import ItemTitle from './components-list/ItemTitle.vue'
 import ItemDesc from './components-list/ItemDesc.vue'
-import Item from './components-list/Item.vue'
+import Item from './components-list/item/index.vue'
 
 const route = useRoute()
 const router = useRouter()

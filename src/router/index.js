@@ -14,21 +14,13 @@ const routes = [
         }
       },
       {
-        name: 'VideoDetails',
-        path: 'video-details',
-        component: () => import('@/views/home/details-video.vue'),
+        name: 'Details',
+        path: 'details',
+        component: () => import('@/views/home/details.vue'),
         meta: {
           title: '视频播放器'
         }
       },
-      {
-        name: 'PictureDetails',
-        path: 'picture-details',
-        component: () => import('@/views/home/details-picture.vue'),
-        meta: {
-          title: '图片详情'
-        }
-      }
     ]
   },
   {

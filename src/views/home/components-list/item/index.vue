@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="item-index">{{itemData.id}}.</div>
-    <div class="file-name" @click="() => { itemData.type === 'dir' ? emits('changeCurrentPath', itemData.file_path) : handleJumpDetails(itemData) }">{{itemData.file_name}}</div>
+    <div class="file-name" @click="() => { itemData.type === 'dir' ? emits('changeCurrentPath', itemData.file_path) : handleJumpDetails() }">{{itemData.file_name}}</div>
   </div>
 </template>
 
@@ -22,25 +22,13 @@ const props = defineProps({
 const emits = defineEmits(['changeCurrentPath'])
 
 // 跳转到文件详情页
-const handleJumpDetails = (row) => {
-  const fileSuffix = row.file_suffix
-  if (['mp4', 'mov', 'avi'].includes(fileSuffix)) {
-    router.push({
-      name: 'VideoDetails',
-      query: {
-        file_path: row.full_path
-      }
-    })
-  } else if (['jpg', 'gif', 'jpg', 'jpeg'].includes(fileSuffix)) {
-    router.push({
-      name: 'PictureDetails',
-      query: {
-        file_path: row.full_path
-      }
-    })
-  } else {
-    ElMessage({type: 'error', message: '暂不支持'})
-  }
+const handleJumpDetails = () => {
+  router.push({
+    name: 'Details',
+    query: {
+      item_data: encodeURIComponent(JSON.stringify(props.itemData))
+    }
+  })
 }
 
 // 复制
