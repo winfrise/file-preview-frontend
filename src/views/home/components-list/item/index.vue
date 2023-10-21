@@ -46,6 +46,7 @@ const handleCopy = (text) => {
   display: flex;
   padding: 10px 20px;
   border-bottom: 1px solid #ccc;
+  cursor: pointer;
   &:hover {
     color: red;
     text-decoration: underline;

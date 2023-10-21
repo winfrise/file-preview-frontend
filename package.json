@@ -19,6 +19,7 @@
     "jsencrypt": "^3.2.1",
     "mitt": "^3.0.0",
     "pinia": "^2.1.4",
+    "swiper": "^10.3.1",
     "vue": "^3.2.37",
     "vue-clipboard3": "^2.0.0",
     "vue-router": "4",

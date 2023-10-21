@@ -8,14 +8,30 @@ const routes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/home/list.vue'),
+        component: () => import('@/views/home/index.vue'),
         meta: {
-          title: '首页'
+          title: '文件菜单'
         }
       },
       {
-        name: 'Details',
-        path: 'details',
+        name: 'FileList',
+        path: 'file-list',
+        component: () => import('@/views/home/list.vue'),
+        meta: {
+          title: '文件列表'
+        }
+      },
+      {
+        name: 'FullscreenList',
+        path: 'fullscreen-list',
+        component: () => import('@/views/home/fullscreen-list.vue'),
+        meta: {
+
+        }
+      },
+      {
+        name: 'FileDetails',
+        path: 'file-details',
         component: () => import('@/views/home/details.vue'),
         meta: {
           title: '视频播放器'
