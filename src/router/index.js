@@ -22,11 +22,11 @@ const routes = [
         }
       },
       {
-        name: 'FullscreenList',
-        path: 'fullscreen-list',
-        component: () => import('@/views/home/fullscreen-list.vue'),
+        name: 'SwiperList',
+        path: 'swiper-list',
+        component: () => import('@/views/home/swiper-list.vue'),
         meta: {
-
+          title: 'Swiper列表'
         }
       },
       {

@@ -134,8 +134,6 @@ const fetchFileList = async (path) => {
   const fileList = (res.data?.file || []).map(item => ({...item, type: 'file'}))
   const dirList = (res.data?.dir || []).map(item => ({...item, type: 'dir'}))
   tableData.value = ([...dirList, ...fileList]).map((item, index) => ({...item, id: (index + 1), height: 40}))
-
-  console.log(tableData.value)
 }
 fetchFileList()
 
