@@ -49,7 +49,7 @@ export default defineConfig(({ command, mode }) => {
       host: '0.0.0.0',
       proxy: {
         '/dev-api': {
-          target: 'http://file-manage:8091',
+          target: 'http://192.168.1.10:8091/',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, ''),
         }

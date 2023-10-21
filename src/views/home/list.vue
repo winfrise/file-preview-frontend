@@ -12,7 +12,13 @@
         </el-breadcrumb>
       </div>
     </div>
+    <template v-if="tableData.length > 0">
+      <Item v-for="(item, index) in tableData" :key="index" :itemData="item" @changeCurrentPath="handleChangeCurrentPath"></Item>
+    </template>
 
+    <el-empty v-else></el-empty>
+
+    <!--
     <div style="height: 500px;">
       <RecycleScroller
         class="virtual-scroller"
@@ -22,26 +28,15 @@
         key-field="id"
         size-field="height"
       >
-        <!-- <template #before>
-          <div class="notice">
-            The message heights are unknown.
-          </div>
-        </template>
-        <template #after>
-          <div class="notice">
-            You have reached the end.
-          </div>
-        </template> -->
         <template #default="props">
-                <div class="item-inner">
-                    <ItemTitle :itemData="props.item" @changeCurrentPath="handleChangeCurrentPath" />
-                    <!-- <ItemDesc :itemData="item" /> -->
-                </div>
+          <Item :itemData="props.item" />
         </template>
       </RecycleScroller>
     </div>
+    -->
 
-     <!-- <VirtualList
+     <!--
+    <VirtualList
           :data-key="'id'"
           :data-sources="tableData"
           :estimate-size="10"
@@ -55,7 +50,8 @@
                 <ItemDesc :itemData="source" />
             </div>
         </template>
-      </VirtualList> -->
+      </VirtualList>
+    -->
 
     <!--
     <el-table :data="tableData" style="width: 100%">
@@ -114,6 +110,7 @@ import { ElMessage } from 'element-plus'
 
 import ItemTitle from './components-list/ItemTitle.vue'
 import ItemDesc from './components-list/ItemDesc.vue'
+import Item from './components-list/Item.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -121,7 +118,7 @@ const { toClipboard } = useClipboard()
 
 // 当前文件夹路径
 const currentPath = ref()
-currentPath.value = route.query.path
+currentPath.value = route.query.path || './uploads'
 
 // 面包屑列表
 const breadList = computed(() => {
