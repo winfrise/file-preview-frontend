@@ -22,33 +22,59 @@
 
 <script setup>
 import Swiper from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
+
 import 'swiper/css';
-const swiper = new Swiper('.swiper', {
-  // Optional parameters
-  direction: 'vertical',
-  loop: false,
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { onMounted } from 'vue';
 
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-  },
+onMounted(() => {
+  const swiper = new Swiper('.swiper', {
+    modules: [Navigation, Pagination],
+    direction: 'vertical',
+    loop: true,
 
-  // Navigation arrows
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
+    pagination: {
+      el: '.swiper-pagination',
+      type: "fraction",
+    },
 
-  // And if we need scrollbar
-  scrollbar: {
-    el: '.swiper-scrollbar',
-  },
-});
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+
+    // And if we need scrollbar
+    // scrollbar: {
+    //   el: '.swiper-scrollbar',
+    // },
+  });
+})
+
+
 </script>
 
 <style lang="scss" scoped>
 .swiper {
   width: 100vw;
   height: 100vh;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
