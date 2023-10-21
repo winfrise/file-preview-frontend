@@ -1,5 +1,13 @@
 <template>
   <div class="layer-box" ref="layerBoxRef" :style="{transform: `translateX(${layerBoxTranslateX})`}">
+    <div class="location-box">
+        当前位置：
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item v-for="(item, index) in breadList" :key="index" @click.enter="handleChangeCurrentPath(getBreadFullPath(index))">
+            <span class="pointer">{{item}}</span>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
     <div v-for="(item, index) in dirList" :key="index">
       <DirItem :itemData="item" @changeCurrentPath="handleChangeCurrentPath" />
     </div>
@@ -12,10 +20,16 @@ import DirItem from '../item/index.vue'
 
 import { useEventListener } from '@vueuse/core'
 
+const emits = defineEmits(['changeCurrentPath'])
+
 const props = defineProps({
   dirList: {
     type: Array,
     default: () => ([])
+  },
+  currentPath: {
+    type: String,
+    required: true
   }
 })
 
@@ -24,6 +38,18 @@ const layerBoxRef = ref()
 defineExpose({
   layerBoxTranslateX
 })
+
+const breadList = computed(() => {
+  return (props.currentPath || '').split('/').filter(item => !['.', '/'].includes(item))
+})
+
+const getBreadFullPath = (breadIndex) => {
+  return './' + breadList.value.slice(0, breadIndex + 1).join('/')
+}
+
+const handleChangeCurrentPath = (path) => {
+  emits('changeCurrentPath', path)
+}
 
 onMounted(() => {
   ;(() => {
@@ -47,7 +73,6 @@ onMounted(() => {
     })
   })()
 
-
 })
 
 </script>
@@ -63,5 +88,11 @@ onMounted(() => {
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   transition: transform ease .2s;
+}
+
+.location-box {
+  margin: 20px;
+  display: flex;
+  align-items: center;
 }
 </style>

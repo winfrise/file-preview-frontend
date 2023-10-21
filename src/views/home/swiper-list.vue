@@ -1,12 +1,10 @@
 <template>
   <div class="swiper" ref="swiperRef">
-    <LayerBox ref="layerBoxRef" :dirList="dirList" />
+    <LayerBox ref="layerBoxRef" :dirList="dirList" :currentPath="currentPath" @changeCurrentPath="handleChangeCurrentPath" />
     <div class="swiper-wrapper">
-      <div class="swiper-slide">1</div>
       <div class="swiper-slide" v-for="(item, index) in fileList" :key="index">
         <PreviewFile :itemData="item" />
       </div>
-      <div class="swiper-slide">2</div>
     </div>
 
     <div class="swiper-pagination"></div>
@@ -99,7 +97,7 @@ fetchFileList()
 
 const handleChangeCurrentPath = (path) => {
   currentPath.value = path
-  layerBoxTranslateX.value = '100%'
+  // layerBoxRef.value.layerBoxTranslateX = '100%'
 
   fetchFileList(path)
 
