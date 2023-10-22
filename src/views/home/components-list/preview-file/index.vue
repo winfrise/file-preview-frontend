@@ -1,7 +1,7 @@
 <template>
-<div class="preview-file">
+<div class="preview-file" ref="targetRef">
   <PreviewPicture v-if="pictureSuffixs.includes(itemData.file_suffix)" :src="itemData.full_path" />
-  <PreviewVideo v-else-if="videoSuffixs.includes(itemData.file_suffix)" :src="itemData.full_path" />
+  <PreviewVideo ref="previewVideo" v-else-if="videoSuffixs.includes(itemData.file_suffix)" :src="itemData.full_path" />
   <div v-else>不支持预览<br>{{ itemData.full_path }}</div>
 </div>
 </template>
@@ -9,6 +9,8 @@
 <script setup>
 import PreviewPicture from './PreviewPicture.vue';
 import PreviewVideo from './PreviewVideo.vue';
+
+import { useIntersectionObserver } from '@vueuse/core'
 
 const pictureSuffixs = ['jpg', 'gif', 'jpg', 'jpeg']
 const videoSuffixs = ['mp4', 'mov', 'avi']
@@ -19,6 +21,17 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+const targetRef = ref(null)
+const previewVideo = ref(null)
+const { stop } = useIntersectionObserver(
+  targetRef,
+  ([{ isIntersecting }], observerElement) => {
+    if (!isIntersecting) {
+      previewVideo.value && previewVideo.value.pause()
+    }
+  },
+)
 </script>
 
 <style lang="scss" scoped>

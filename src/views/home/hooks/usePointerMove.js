@@ -23,17 +23,19 @@ export function usePointerMove (options = {}) {
   }
 
 
+  const pointStart = 'ontouchstart' in window ? 'touchstart' : 'mousedown'
+  const pointMove = 'ontouchstart' in window ? 'touchmove' : 'mousemove'
+  const pointEnd = 'ontouchstart' in window ? 'touchend' : 'mouseup'
 
 
-
-  useEventListener(elem, 'touchstart', (e) => {
+  useEventListener(elem, pointStart, (e) => {
     const x = e.touches[0].pageX
     const y = e.touches[0].pageY
     startPoint.value = [x, y]
 
     options.on.touchStart && options.on.touchStart({startPoint})
 
-    const cleanTouchmove = useEventListener(elem, 'touchmove', (e) => {
+    const cleanTouchmove = useEventListener(elem, pointMove, (e) => {
       const x = e.changedTouches[0].pageX
       const y = e.changedTouches[0].pageY
       lastPoint.value = [x, y]
@@ -42,7 +44,7 @@ export function usePointerMove (options = {}) {
 
       options.on.touchMove && options.on.touchMove({distX, distY, directionX, directionY})
     })
-    const cleanTouchEnd = useEventListener(elem, 'touchend', (e) => {
+    const cleanTouchEnd = useEventListener(elem, pointEnd, (e) => {
       const x = e.changedTouches[0].pageX
       const y = e.changedTouches[0].pageY
       lastPoint.value = [x, y]

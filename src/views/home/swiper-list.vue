@@ -110,4 +110,13 @@ const handleChangeCurrentPath = (path) => {
   justify-content: center;
   align-items: center;
 }
+.swiper-pagination {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  transform: translate(0);
+  width: auto;
+  margin: 10px;
+}
 </style>

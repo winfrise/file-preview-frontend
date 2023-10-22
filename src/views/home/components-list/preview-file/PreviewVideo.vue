@@ -1,14 +1,21 @@
 <template>
-  <video :src="src" class="video" preload="metadata" controls loading="lazy"></video>
+  <video :src="src" ref="videoRef" class="video" preload="metadata" controls loading="lazy"></video>
 </template>
 
 <script setup>
+const videoRef = ref(null)
+
 const props = defineProps({
   src: {
-    type: Object,
-    default: () => ({})
+    type: String,
+    default: ''
   }
 })
+
+const pause = () => {
+  videoRef.value.pause()
+}
+defineExpose({stop})
 </script>
 
 <style lang="scss" scoped>
