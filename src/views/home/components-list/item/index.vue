@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="item-index">{{itemData.id}}.</div>
+    <el-icon class="item-icon"><Folder /></el-icon>
     <div class="file-name" @click="() => { itemData.type === 'dir' ? emits('changeCurrentPath', itemData.file_path) : handleJumpDetails() }">{{itemData.file_name}}</div>
   </div>
 </template>
@@ -46,20 +46,20 @@ const handleCopy = (text) => {
   display: flex;
   padding: 10px 20px;
   border-bottom: 1px solid #ccc;
+  align-items: center;
   cursor: pointer;
   &:hover {
     color: red;
     text-decoration: underline;
   }
-  .item-index {
-    position: absolute;
-    left: -6px;
-    transform: translateX(-100%);
+  .item-icon {
+    font-size: 18x;
   }
   .file-name {
     flex: 1;
     font-weight: bold;
     word-break:break-all;
+    margin-left: 6px;
   }
   .file-suffix {
     width: 60px;

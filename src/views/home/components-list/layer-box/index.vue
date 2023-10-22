@@ -62,14 +62,14 @@ usePointerMove({
   }
 })
 
-onMounted(() => {
-
-
-})
-
 </script>
 
 <style lang="scss" scoped>
+::v-deep {
+  .el-breadcrumb__inner {
+    color: #fff!important;
+  }
+}
 .layer-box {
   position: absolute;
   z-index: 2;
@@ -80,6 +80,7 @@ onMounted(() => {
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   transition: transform ease .2s;
+  color: #fff;
 }
 
 .location-box {
