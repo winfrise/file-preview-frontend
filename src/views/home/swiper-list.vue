@@ -20,8 +20,10 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { useRoute, useRouter } from 'vue-router'
-import { nextTick, onMounted } from 'vue';
+import { nextTick, onMounted, watch } from 'vue';
+
 import { useEventListener } from '@vueuse/core'
+import { usePointerMove } from './hooks/usePointerMove.js';
 
 import PreviewFile from './components-list/preview-file/index.vue'
 import LayerBox from './components-list/layer-box/index.vue'
@@ -55,32 +57,51 @@ onMounted(() => {
     },
   });
 
+  usePointerMove({
+    el: swiperRef,
+    on: {
+      touchStart: () => {
 
-  ;(() => {
-    let startPoint = [null, null]
-    useEventListener(swiperRef, 'touchstart', (e) => {
-      startPoint = [e.touches[0].pageX, e.touches[0].pageY]
-
-      const cleanTouchmove = useEventListener(swiperRef, 'touchmove', (e) => {
-        let movePoint = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
-        const horizontalDist = movePoint[0] - startPoint[0]
-        if (horizontalDist < 0 && layerBoxRef.value.layerBoxTranslateX !== '0px') {// 向左滑动
-          layerBoxRef.value.layerBoxTranslateX = `calc(100% - ${Math.abs(horizontalDist)}px)`
+      },
+      touchMove: ({distX, distY, directionX, directionY}) => {
+        console.log(distX, distY, directionX, directionY)
+        if (directionX === 'left') {
+          layerBoxRef.value.layerBoxTranslateX = `calc(100% + ${distX * directionX}px)`
         }
-      })
-      const cleanTouchEnd = useEventListener(swiperRef, 'touchend', (e) => {
-        let endPoint = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
-        const horizontalDist = endPoint[0] - startPoint[0]
-        if (horizontalDist < 0 && layerBoxRef.value.layerBoxTranslateX !== '0px') {
+      },
+      touchEnd: ({distX, distY, directionX, directionY}) => {
+        if (directionX === 'left') {
           layerBoxRef.value.layerBoxTranslateX = '0px'
         }
+      }
+    }
+  })
 
-        cleanTouchmove()
-        cleanTouchEnd()
-      })
-    })
+  // ;(() => {
+  //   let startPoint = [null, null]
+  //   useEventListener(swiperRef, 'touchstart', (e) => {
+  //     startPoint = [e.touches[0].pageX, e.touches[0].pageY]
 
-  })()
+  //     const cleanTouchmove = useEventListener(swiperRef, 'touchmove', (e) => {
+  //       let movePoint = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
+  //       const horizontalDist = movePoint[0] - startPoint[0]
+  //       if (horizontalDist < 0 && layerBoxRef.value.layerBoxTranslateX !== '0px') {// 向左滑动
+  //         layerBoxRef.value.layerBoxTranslateX = `calc(100% - ${Math.abs(horizontalDist)}px)`
+  //       }
+  //     })
+  //     const cleanTouchEnd = useEventListener(swiperRef, 'touchend', (e) => {
+  //       let endPoint = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
+  //       const horizontalDist = endPoint[0] - startPoint[0]
+  //       if (horizontalDist < 0 && layerBoxRef.value.layerBoxTranslateX !== '0px') {
+  //         layerBoxRef.value.layerBoxTranslateX = '0px'
+  //       }
+
+  //       cleanTouchmove()
+  //       cleanTouchEnd()
+  //     })
+  //   })
+
+  // })()
 })
 
 // 请求获取数据
