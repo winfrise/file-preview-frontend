@@ -53,7 +53,7 @@ const handleNetworkError = (errStatus) => {
 
   ElMessage.error(errMessage)
 }
-win
+
 if (import.meta.env.MODE === 'dev') {
   axios.defaults.baseURL = import.meta.env.VITE_APP_BASE_API;
 } else {

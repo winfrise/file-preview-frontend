@@ -39,7 +39,7 @@ const layerBoxRef = ref()
 
 // 当前文件夹路径
 const currentPath = ref()
-currentPath.value = route.query.path || './uploads'
+currentPath.value = route.query.path || './'
 let swiper
 onMounted(() => {
   swiper = new Swiper('.swiper', {
