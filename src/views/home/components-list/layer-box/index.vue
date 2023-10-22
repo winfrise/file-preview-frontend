@@ -18,7 +18,7 @@
 import { onMounted } from 'vue'
 import DirItem from '../item/index.vue'
 
-import { useEventListener } from '@vueuse/core'
+import { usePointerMove } from '../../hooks/usePointerMove.js';
 
 const emits = defineEmits(['changeCurrentPath'])
 
@@ -51,27 +51,19 @@ const handleChangeCurrentPath = (path) => {
   emits('changeCurrentPath', path)
 }
 
-onMounted(() => {
-  ;(() => {
-    let startPoint = [null, null]
-    useEventListener(layerBoxRef, 'touchstart', (e) => {
-      startPoint = [e.touches[0].pageX, e.touches[0].pageY]
-    })
-    useEventListener(layerBoxRef, 'touchmove', (e) => {
-      let movePoint = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
-      const horizontalDist = movePoint[0] - startPoint[0]
-      if (horizontalDist > 0 && layerBoxTranslateX.value !== '100%') {// 向右滑动
-        layerBoxTranslateX.value = `calc(${Math.abs(horizontalDist)}px)`
-      }
-    })
-    useEventListener(layerBoxRef, 'touchend', (e) => {
-      let endPoint = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
-      const horizontalDist = endPoint[0] - startPoint[0]
-      if (horizontalDist > 0 && layerBoxTranslateX.value !== '100%') {
+usePointerMove({
+  el: layerBoxRef,
+  on: {
+    touchEnd: ({distX, distY, directionX, directionY}) => {
+      if (directionX === 'right' && distX > distY) {
         layerBoxTranslateX.value = '100%'
       }
-    })
-  })()
+    }
+  }
+})
+
+onMounted(() => {
+
 
 })
 
