@@ -13,7 +13,7 @@ import PreviewVideo from './PreviewVideo.vue';
 import { useIntersectionObserver } from '@vueuse/core'
 
 const pictureSuffixs = ['jpg', 'gif', 'jpg', 'jpeg']
-const videoSuffixs = ['mp4', 'mov', 'avi']
+const videoSuffixs = ['mp4', 'mov', 'avi', 'mkv', 'flv', '3gp']
 
 const props = defineProps({
   itemData: {

@@ -15,7 +15,7 @@ const props = defineProps({
 const pause = () => {
   videoRef.value.pause()
 }
-defineExpose({stop})
+defineExpose({pause})
 </script>
 
 <style lang="scss" scoped>
