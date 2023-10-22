@@ -1,5 +1,5 @@
 <template>
-  <el-image class="img" :src="src" fit="contain"></el-image>
+  <el-image class="img" :src="src" fit="contain" loading="lazy"></el-image>
 </template>
 
 <script setup>

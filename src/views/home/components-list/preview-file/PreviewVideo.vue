@@ -1,5 +1,5 @@
 <template>
-  <video :src="src" class="video" preload="metadata" controls></video>
+  <video :src="src" class="video" preload="metadata" controls loading="lazy"></video>
 </template>
 
 <script setup>
