@@ -53,8 +53,12 @@ const handleNetworkError = (errStatus) => {
 
   ElMessage.error(errMessage)
 }
-
-axios.defaults.baseURL = import.meta.env.VITE_APP_BASE_API;
+win
+if (import.meta.env.MODE === 'dev') {
+  axios.defaults.baseURL = import.meta.env.VITE_APP_BASE_API;
+} else {
+  axios.defaults.baseURL = `${location.protocol}//${location.hostname}:8091`
+}
 
 axios.interceptors.request.use((config) => {
   config.headers['token'] = Cookies.get('token')
