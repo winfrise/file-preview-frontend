@@ -1,5 +1,5 @@
 <template>
-<div class="preview-file" ref="targetRef">
+<div class="preview-file">
   <PreviewPicture v-if="pictureSuffixs.includes(itemData.file_suffix)" :src="itemData.full_path" />
   <PreviewVideo ref="videoRef" v-else-if="videoSuffixs.includes(itemData.file_suffix)"
                 :src="itemData.full_path"
@@ -28,6 +28,8 @@ const props = defineProps({
     default: () => ({})
   },
 })
+
+const videoRef = ref(null)
 
 defineExpose({
   videoRef
