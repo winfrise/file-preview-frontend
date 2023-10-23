@@ -22,22 +22,21 @@ export function usePointerMove (options = {}) {
     return {distX, distY, directionX, directionY}
   }
 
-
   const pointStart = 'ontouchstart' in window ? 'touchstart' : 'mousedown'
   const pointMove = 'ontouchstart' in window ? 'touchmove' : 'mousemove'
   const pointEnd = 'ontouchstart' in window ? 'touchend' : 'mouseup'
 
 
   useEventListener(elem, pointStart, (e) => {
-    const x = e.touches[0].pageX
-    const y = e.touches[0].pageY
+    const x = e.pageX || e.touches[0].pageX
+    const y = e.pageY || e.touches[0].pageY
     startPoint.value = [x, y]
 
     options.on.touchStart && options.on.touchStart({startPoint})
 
     const cleanTouchmove = useEventListener(elem, pointMove, (e) => {
-      const x = e.changedTouches[0].pageX
-      const y = e.changedTouches[0].pageY
+      const x = e.pageX || e.changedTouches[0].pageX
+      const y = e.pageY || e.changedTouches[0].pageY
       lastPoint.value = [x, y]
 
       const {distX, distY, directionX, directionY} = getMoveInfo(startPoint, lastPoint)
@@ -45,8 +44,8 @@ export function usePointerMove (options = {}) {
       options.on.touchMove && options.on.touchMove({distX, distY, directionX, directionY})
     })
     const cleanTouchEnd = useEventListener(elem, pointEnd, (e) => {
-      const x = e.changedTouches[0].pageX
-      const y = e.changedTouches[0].pageY
+      const x = e.pageX || e.changedTouches[0].pageX
+      const y = e.pageY || e.changedTouches[0].pageY
       lastPoint.value = [x, y]
 
       const {distX, distY, directionX, directionY} = getMoveInfo(startPoint, lastPoint)

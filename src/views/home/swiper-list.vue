@@ -55,6 +55,7 @@ onMounted(() => {
     observeParents: false,
     observer: false,
     mousewheel: true,
+    touchStartPreventDefault: false,
     pagination: {
       el: '.swiper-pagination',
       type: "fraction",
