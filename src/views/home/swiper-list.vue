@@ -98,7 +98,7 @@ const fetchFileList = async (path) => {
   fileList.value = (res.data?.file || []).map(item => ({...item, type: 'file'}))
   dirList.value = (res.data?.dir || []).map(item => ({...item, type: 'dir'}))
   nextTick(() => {
-    swiper.slideTo(1)
+    swiper.slideTo(0)
     swiper.update()
   })
 }

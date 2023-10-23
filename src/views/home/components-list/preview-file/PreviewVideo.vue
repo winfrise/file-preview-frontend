@@ -1,7 +1,5 @@
 <template>
-  <video :src="src" ref="videoRef" class="video" preload="metadata" controls loading="lazy"
-          :autoplay="autoPlay"
-  ></video>
+  <video :src="src" ref="videoRef" class="video" preload="metadata" controls loading="lazy"></video>
 </template>
 
 <script setup>
@@ -11,10 +9,6 @@ const props = defineProps({
   src: {
     type: String,
     default: ''
-  },
-  autoPlay: {
-    type: Boolean,
-    default: false
   }
 })
 
