@@ -15,7 +15,7 @@
 
 <script setup>
 import Swiper from 'swiper';
-import { Pagination } from 'swiper/modules';
+import { Pagination, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -48,13 +48,13 @@ const swiperActiveIndex = ref()
 let swiper
 onMounted(() => {
   swiper = new Swiper('.swiper', {
-    modules: [ Pagination],
+    modules: [ Pagination, Mousewheel],
     direction: 'vertical',
     loop: true,
     observeSlideChildren: true,
     observeParents: false,
     observer: false,
-
+    mousewheel: true,
     pagination: {
       el: '.swiper-pagination',
       type: "fraction",
