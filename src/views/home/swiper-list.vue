@@ -44,7 +44,7 @@ const previewFileRef = ref([])
 const currentPath = ref()
 currentPath.value = route.query.path || './'
 
-const swiperActiveIndex = ref(0)
+const swiperActiveIndex = ref()
 let swiper
 onMounted(() => {
   swiper = new Swiper('.swiper', {
@@ -61,10 +61,11 @@ onMounted(() => {
     },
     on: {
       activeIndexChange: ({activeIndex}) => {
-        const fileSuffix = fileList.value[swiperActiveIndex.value].file_suffix
-        if (checkIsVideo(fileSuffix)) {
+        const fileSuffix = fileList.value[swiperActiveIndex.value]?.file_suffix
+        if (fileSuffix && checkIsVideo(fileSuffix)) {
           previewFileRef.value[swiperActiveIndex.value].videoRef.pause()
         }
+
         swiperActiveIndex.value = activeIndex
       },
       slideChangeTransitionEnd: () => {
@@ -88,6 +89,7 @@ onMounted(() => {
   })
 })
 
+
 // 请求获取数据
 const fetchFileList = async (path) => {
   const [err, res] = await getFileList({path: path || currentPath.value })
@@ -95,6 +97,7 @@ const fetchFileList = async (path) => {
   fileList.value = (res.data?.file || []).map(item => ({...item, type: 'file'}))
   dirList.value = (res.data?.dir || []).map(item => ({...item, type: 'dir'}))
   nextTick(() => {
+    swiper.slideTo(1)
     swiper.update()
   })
 }
