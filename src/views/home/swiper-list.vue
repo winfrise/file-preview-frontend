@@ -3,7 +3,7 @@
     <LayerBox ref="layerBoxRef" :dirList="dirList" :currentPath="currentPath" @changeCurrentPath="handleChangeCurrentPath" />
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(item, index) in fileList" :key="index">
-        <PreviewFile :itemData="item" />
+        <PreviewFile ref="previewFileRef" :itemData="item" />
       </div>
     </div>
 
@@ -28,6 +28,7 @@ import PreviewFile from './components-list/preview-file/index.vue'
 import LayerBox from './components-list/layer-box/index.vue'
 
 import { getFileList } from '@/api/home.js'
+import { checkIsVideo } from './utils/checkTypeByPath'
 
 const route = useRoute()
 const router = useRouter()
@@ -36,10 +37,14 @@ const fileList = ref([])
 const dirList = ref([])
 const swiperRef = ref()
 const layerBoxRef = ref()
+const previewFileRef = ref([])
+
 
 // 当前文件夹路径
 const currentPath = ref()
 currentPath.value = route.query.path || './'
+
+const swiperActiveIndex = ref(0)
 let swiper
 onMounted(() => {
   swiper = new Swiper('.swiper', {
@@ -54,6 +59,17 @@ onMounted(() => {
       el: '.swiper-pagination',
       type: "fraction",
     },
+    on: {
+      activeIndexChange: ({activeIndex}) => {
+        swiperActiveIndex.value = activeIndex
+      },
+      slideChangeTransitionEnd: () => {
+        const fileSuffix = fileList.value[swiperActiveIndex.value].file_suffix
+        if (checkIsVideo(fileSuffix)) {
+          previewFileRef.value[swiperActiveIndex.value].videoRef.play()
+        }
+      }
+    }
   });
 
   usePointerMove({

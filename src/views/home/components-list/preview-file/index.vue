@@ -1,7 +1,9 @@
 <template>
 <div class="preview-file" ref="targetRef">
   <PreviewPicture v-if="pictureSuffixs.includes(itemData.file_suffix)" :src="itemData.full_path" />
-  <PreviewVideo ref="previewVideo" v-else-if="videoSuffixs.includes(itemData.file_suffix)" :src="itemData.full_path" />
+  <PreviewVideo ref="videoRef" v-else-if="videoSuffixs.includes(itemData.file_suffix)"
+                :src="itemData.full_path"
+  />
   <div v-else class="no-support">
     <el-empty :image-size="120">
       <template #description>
@@ -26,19 +28,25 @@ const props = defineProps({
   itemData: {
     type: Object,
     default: () => ({})
-  }
+  },
 })
 
+
+
 const targetRef = ref(null)
-const previewVideo = ref(null)
+const videoRef = ref(null)
 const { stop } = useIntersectionObserver(
   targetRef,
   ([{ isIntersecting }], observerElement) => {
     if (!isIntersecting) {
-      previewVideo.value && previewVideo.value.pause()
+      videoRef.value && videoRef.value.pause()
     }
   },
 )
+
+defineExpose({
+  videoRef
+})
 </script>
 
 <style lang="scss" scoped>

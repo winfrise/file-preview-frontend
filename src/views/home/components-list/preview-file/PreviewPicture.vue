@@ -5,9 +5,9 @@
 <script setup>
 const props = defineProps({
   src: {
-    type: Object,
-    default: () => ({})
-  }
+    type: String,
+    default: ''
+  },
 })
 </script>
 
