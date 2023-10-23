@@ -2,7 +2,14 @@
 <div class="preview-file" ref="targetRef">
   <PreviewPicture v-if="pictureSuffixs.includes(itemData.file_suffix)" :src="itemData.full_path" />
   <PreviewVideo ref="previewVideo" v-else-if="videoSuffixs.includes(itemData.file_suffix)" :src="itemData.full_path" />
-  <div v-else>不支持预览<br>{{ itemData.full_path }}</div>
+  <div v-else class="no-support">
+    <el-empty :image-size="120">
+      <template #description>
+        <p>该文件不支持预览</p>
+        <p >{{ itemData.full_path }}</p>
+      </template>
+    </el-empty>
+  </div>
 </div>
 </template>
 
@@ -38,5 +45,12 @@ const { stop } = useIntersectionObserver(
 .preview-file {
   width: 100vw;
   height: 100vh;
+}
+.no-support {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 </style>
