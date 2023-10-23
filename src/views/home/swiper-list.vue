@@ -61,6 +61,10 @@ onMounted(() => {
     },
     on: {
       activeIndexChange: ({activeIndex}) => {
+        const fileSuffix = fileList.value[swiperActiveIndex.value].file_suffix
+        if (checkIsVideo(fileSuffix)) {
+          previewFileRef.value[swiperActiveIndex.value].videoRef.pause()
+        }
         swiperActiveIndex.value = activeIndex
       },
       slideChangeTransitionEnd: () => {

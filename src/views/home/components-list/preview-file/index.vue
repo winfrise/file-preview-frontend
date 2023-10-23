@@ -19,8 +19,6 @@
 import PreviewPicture from './PreviewPicture.vue';
 import PreviewVideo from './PreviewVideo.vue';
 
-import { useIntersectionObserver } from '@vueuse/core'
-
 const pictureSuffixs = ['jpg', 'gif', 'jpg', 'jpeg']
 const videoSuffixs = ['mp4', 'mov', 'avi', 'mkv', 'flv', '3gp']
 
@@ -30,19 +28,6 @@ const props = defineProps({
     default: () => ({})
   },
 })
-
-
-
-const targetRef = ref(null)
-const videoRef = ref(null)
-const { stop } = useIntersectionObserver(
-  targetRef,
-  ([{ isIntersecting }], observerElement) => {
-    if (!isIntersecting) {
-      videoRef.value && videoRef.value.pause()
-    }
-  },
-)
 
 defineExpose({
   videoRef
