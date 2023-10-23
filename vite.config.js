@@ -50,7 +50,7 @@ export default defineConfig(({ command, mode }) => {
       proxy: {
         '/dev-api': {
           // target: 'http://192.168.1.10:8091/',
-          target: 'http://192.168.0.102:8091/',
+          target: 'http://192.168.1.5:8091/',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, ''),
         }
